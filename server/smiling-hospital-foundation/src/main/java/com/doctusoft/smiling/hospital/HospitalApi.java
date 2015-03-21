@@ -1,8 +1,10 @@
 package com.doctusoft.smiling.hospital;
 
 import java.util.List;
+import java.util.Set;
 
 import com.doctusoft.smiling.Constants;
+import com.doctusoft.smiling.security.AuthenticationService;
 import com.doctusoft.smiling.security.PermissionLevel;
 import com.doctusoft.smiling.security.Restricted;
 import com.google.api.server.spi.ServiceException;
@@ -28,10 +30,12 @@ import com.google.inject.Inject;
 public class HospitalApi {
 
 	private final HospitalDAO hospitalDAO;
+	private final AuthenticationService authenticationService;
 
 	@Inject
-	public HospitalApi(HospitalDAO hospitalDAO) {
+	public HospitalApi(HospitalDAO hospitalDAO, AuthenticationService authenticationService) {
 		this.hospitalDAO = hospitalDAO;
+		this.authenticationService = authenticationService;
 	}
 
 	@Restricted(PermissionLevel.NATIONAL_COORDINATOR)
@@ -61,7 +65,7 @@ public class HospitalApi {
 		return convert(hospital);
 	}
 
-	@Restricted(PermissionLevel.VOLUNTEER)
+	@Restricted(PermissionLevel.NATIONAL_COORDINATOR)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/hospital")
 	public List<ApiHospital> getHospitals(
 			User user,
@@ -69,6 +73,23 @@ public class HospitalApi {
 					throws ServiceException {
 
 		List<Hospital> hospitals = hospitalDAO.getAll();
+		return convertList(hospitals);
+	}
+
+	@Restricted(PermissionLevel.VOLUNTEER)
+	@ApiMethod(httpMethod = HttpMethod.GET, path = "/hospital/near")
+	public List<ApiHospital> getHospitalsNearToMe(
+			User user,
+			@Nullable @Named("sessionId") String sessionId)
+					throws ServiceException {
+
+		Set<String> cities = authenticationService.getUserContext().getCities();
+		List<Hospital> hospitals = hospitalDAO.getHospitalsInCities(cities);
+		List<ApiHospital> apiHospitals = convertList(hospitals);
+		return apiHospitals;
+	}
+
+	private List<ApiHospital> convertList(List<Hospital> hospitals) {
 		List<ApiHospital> apiHospitals = Lists.newArrayList();
 		for (Hospital hospital : hospitals) {
 			apiHospitals.add(convert(hospital));

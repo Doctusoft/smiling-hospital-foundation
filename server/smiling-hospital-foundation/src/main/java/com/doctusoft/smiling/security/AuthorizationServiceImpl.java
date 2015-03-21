@@ -3,7 +3,7 @@ package com.doctusoft.smiling.security;
 import com.google.appengine.api.NamespaceManager;
 import com.google.inject.Inject;
 
-public class AuthorizationServiceImpl implements AuthorizationService {
+class AuthorizationServiceImpl implements AuthorizationService {
 
 	private final AuthenticationService authenticationService;
 

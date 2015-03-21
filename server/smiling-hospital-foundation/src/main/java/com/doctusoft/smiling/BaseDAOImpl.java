@@ -4,12 +4,15 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
 
+import com.googlecode.objectify.ObjectifyService;
+
 public abstract class BaseDAOImpl<T extends BaseEntity> implements BaseDAO<T> {
 
-	private Class<T> entityClass;
+	protected Class<T> entityClass;
 
 	public BaseDAOImpl(Class<T> entityClass) {
 		this.entityClass = entityClass;
+		ObjectifyService.factory().register(entityClass);
 	}
 
 	@Override

@@ -34,13 +34,18 @@ public class SmilingUserApi {
 	@Restricted(PermissionLevel.VISITOR)
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "/user")
 	public void registerUser(
+			RegistrationData registrationData,
 			User user,
 			@Nullable @Named("sessionId") String sessionId) {
 
+		registrationData.validateAndNormalize();
+
+		// TODO fill the other fields
 		smilingUserDAO.save(SmilingUser.builder()
-				.email(user.getEmail())
-				.permissionLevel(PermissionLevel.NATIONAL_COORDINATOR)
-				.name("name")
+				.permissionLevel(PermissionLevel.VOLUNTEER)
+				.email(registrationData.getEmail())
+				.name(registrationData.getName())
+				.cities(registrationData.getCities())
 				.build());
 	}
 

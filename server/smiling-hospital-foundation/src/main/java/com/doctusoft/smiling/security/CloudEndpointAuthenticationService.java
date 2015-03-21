@@ -1,9 +1,12 @@
 package com.doctusoft.smiling.security;
 
+import java.util.Collections;
+
 import com.doctusoft.smiling.user.SmilingUser;
 import com.doctusoft.smiling.user.SmilingUserDAO;
 import com.google.api.server.spi.auth.common.User;
 import com.google.appengine.api.NamespaceManager;
+import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 
 public class CloudEndpointAuthenticationService implements AuthenticationService {
@@ -53,11 +56,15 @@ public class CloudEndpointAuthenticationService implements AuthenticationService
 		CONTEXT_HOLDER.set(UserContext.builder()
 				.email(smilingUser.getEmail())
 				.permission(smilingUser.getPermissionLevel())
+				.cities(ImmutableSet.copyOf(smilingUser.getCities()))
 				.build());
 	}
 
 	private void createVisitorContext() {
-		CONTEXT_HOLDER.set(UserContext.builder().permission(PermissionLevel.VISITOR).build());
+		CONTEXT_HOLDER.set(UserContext.builder()
+				.permission(PermissionLevel.VISITOR)
+				.cities(Collections.<String> emptySet())
+				.build());
 	}
 
 	@Override

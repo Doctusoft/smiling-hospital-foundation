@@ -12,6 +12,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 @NoArgsConstructor
 @Data
@@ -20,16 +21,24 @@ import com.googlecode.objectify.annotation.Index;
 @EqualsAndHashCode(callSuper=true, of={})
 public class Hospital extends BaseEntity {
 
+	public static interface IndexedProperties extends BaseEntity.IndexedProperties {
+		String CITY = "city";
+	}
+
 	@Id
 	private String id;
-	@Index
+	@Unindex
 	private String name;
+	@Index
+	private String city;
+
 
 	@Builder
-	public Hospital(String id, String name) {
+	public Hospital(String id, String name, String city) {
 		super();
 		this.id = MoreObjects.firstNonNull(id, IdGenerator.createId());
 		this.name = name;
+		this.city = city;
 	}
 
 
