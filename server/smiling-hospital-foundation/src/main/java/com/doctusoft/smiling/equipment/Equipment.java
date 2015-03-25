@@ -21,7 +21,7 @@ import com.googlecode.objectify.annotation.Unindex;
 @Data
 @Cache
 @Entity
-@EqualsAndHashCode(callSuper=true, of={})
+@EqualsAndHashCode(callSuper=true, of={"name"})
 public class Equipment extends BaseEntity{
 	
 	public static interface IndexedProperties extends

@@ -18,7 +18,7 @@ import com.googlecode.objectify.annotation.Unindex;
 @Data
 @Cache
 @Entity
-@EqualsAndHashCode(callSuper=true, of={})
+@EqualsAndHashCode(callSuper=true, of={"id"})
 public class Hospital extends BaseEntity {
 
 	public static interface IndexedProperties extends BaseEntity.IndexedProperties {
