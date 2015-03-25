@@ -37,14 +37,15 @@ public class EquipmentApi {
 	private final EquipmentDAO equipmentDAO;
 
 	@Inject
-	public EquipmentApi(EquipmentDAO equipmentDAO,
-			AuthenticationService authenticationService) {
+	public EquipmentApi(EquipmentDAO equipmentDAO) {
 		this.equipmentDAO = equipmentDAO;
 	}
 
 	@Restricted(PermissionLevel.COORDINATOR)
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "/equipment")
-	public void createEquipment(ApiEquipment apiEquipment, User user,
+	public void createEquipment(
+			ApiEquipment apiEquipment,
+			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
@@ -57,8 +58,10 @@ public class EquipmentApi {
 
 	@Restricted(PermissionLevel.VOLUNTEER)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/{equipmentName}")
-	public ApiEquipment getEquipment(@Named("equipmentName") String equipmentName,
-			User user, @Nullable @Named("sessionId") String sessionId)
+	public ApiEquipment getEquipment(
+			@Named("equipmentName") String equipmentName,
+			User user,
+			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
 		Equipment equipment = equipmentDAO.get(equipmentName);
@@ -67,7 +70,9 @@ public class EquipmentApi {
 
 	@Restricted(PermissionLevel.COORDINATOR)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/delete/{equipmentName}")
-	public void deleteEquipment(@Named("equipmentName") String equipmentName,
+	public void deleteEquipment(
+			@Named("equipmentName") String equipmentName,
+			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
@@ -77,7 +82,8 @@ public class EquipmentApi {
 
 	@Restricted(PermissionLevel.VOLUNTEER)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment")
-	public List<ApiEquipment> getEquipments(User user,
+	public List<ApiEquipment> getEquipments(
+			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
