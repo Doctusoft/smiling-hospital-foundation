@@ -19,6 +19,11 @@ public abstract class BaseDAOImpl<T extends BaseEntity> implements BaseDAO<T> {
 	public void save(T entity) {
 		ofy().save().entity(entity);
 	}
+	
+	@Override
+	public void delete(T entity) {
+		ofy().delete().entity(entity);
+	}
 
 	@Override
 	public T get(String id) {
