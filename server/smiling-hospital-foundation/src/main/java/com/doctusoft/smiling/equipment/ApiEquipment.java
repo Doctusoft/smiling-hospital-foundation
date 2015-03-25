@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class ApiEquipment implements Serializable {
 
-	private String id;
 	private String name;
 }

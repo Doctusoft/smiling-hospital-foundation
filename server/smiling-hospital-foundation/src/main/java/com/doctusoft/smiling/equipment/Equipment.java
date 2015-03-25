@@ -29,14 +29,11 @@ public class Equipment extends BaseEntity{
 	}
 
 	@Id
-	private String id;
-	@Unindex
 	private String name;
 
 	@Builder
-	public Equipment(String id, String name) {
+	public Equipment(String name) {
 		super();
-		this.id = MoreObjects.firstNonNull(id, IdGenerator.createId());
 		this.name = name;
 	}
 

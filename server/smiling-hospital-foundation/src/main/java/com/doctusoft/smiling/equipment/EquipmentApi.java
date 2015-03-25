@@ -35,13 +35,11 @@ import com.google.inject.Inject;
 public class EquipmentApi {
 
 	private final EquipmentDAO equipmentDAO;
-	private final AuthenticationService authenticationService;
 
 	@Inject
 	public EquipmentApi(EquipmentDAO equipmentDAO,
 			AuthenticationService authenticationService) {
 		this.equipmentDAO = equipmentDAO;
-		this.authenticationService = authenticationService;
 	}
 
 	@Restricted(PermissionLevel.COORDINATOR)
@@ -50,31 +48,31 @@ public class EquipmentApi {
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Equipment equipment = Equipment.builder().name(apiEquipment.getName())
+		Equipment equipment = Equipment.builder()
+				.name(apiEquipment.getName())
 				.build();
 
 		equipmentDAO.save(equipment);
 	}
 
 	@Restricted(PermissionLevel.VOLUNTEER)
-	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/{equipmentId}")
-	public ApiEquipment getEquipment(@Named("equipmentId") String equipmentId,
+	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/{equipmentName}")
+	public ApiEquipment getEquipment(@Named("equipmentName") String equipmentName,
 			User user, @Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Equipment equipment = equipmentDAO.get(equipmentId);
+		Equipment equipment = equipmentDAO.get(equipmentName);
 		return convert(equipment);
 	}
 
 	@Restricted(PermissionLevel.COORDINATOR)
-	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/delete/{equipmentId}")
-	public void deleteEquipment(@Named("equipmentId") String equipmentId,
+	@ApiMethod(httpMethod = HttpMethod.GET, path = "/equipment/delete/{equipmentName}")
+	public void deleteEquipment(@Named("equipmentName") String equipmentName,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Equipment equipment = equipmentDAO.get(equipmentId);
+		Equipment equipment = equipmentDAO.get(equipmentName);
 		equipmentDAO.delete(equipment);
-		;
 	}
 
 	@Restricted(PermissionLevel.VOLUNTEER)
@@ -96,8 +94,7 @@ public class EquipmentApi {
 	}
 
 	private ApiEquipment convert(Equipment equipment) {
-		return ApiEquipment.builder().id(equipment.getId())
-				.name(equipment.getName()).build();
+		return ApiEquipment.builder().name(equipment.getName()).build();
 	}
 
 }
