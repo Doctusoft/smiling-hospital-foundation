@@ -12,6 +12,7 @@ import com.doctusoft.smiling.hospital.Hospital;
 import com.doctusoft.smiling.security.AuthenticationService;
 import com.doctusoft.smiling.security.PermissionLevel;
 import com.doctusoft.smiling.security.Restricted;
+import com.doctusoft.smiling.user.RegistrationData;
 import com.google.api.server.spi.ServiceException;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
@@ -49,17 +50,19 @@ public class ReportApi {
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
+		apiReport.validateAndNormalize();
+
 		Report report = Report.builder()
-		            .department(		apiReport.getDepartment())
-		            .numberOfChildren(	apiReport.getNumberOfChildren())
-		            .numberOfParents(	apiReport.getNumberOfParents())
-		            .contentOfOcupation(apiReport.getContentOfOcupation())
-		            .customShortage(	apiReport.getCustomShortage())
-		            .opinionOnThePeers(	apiReport.getOpinionOnThePeers())
-		            .problem(			apiReport.getProblem())
-		            .solution(			apiReport.getSolution())
-		            .story(				apiReport.getStory())
-		            .build();
+					.department(		apiReport.getDepartment())
+					.numberOfChildren(	apiReport.getNumberOfChildren())
+					.numberOfParents(	apiReport.getNumberOfParents())
+					.contentOfOcupation(apiReport.getContentOfOcupation())
+					.customShortage(	apiReport.getCustomShortage())
+					.opinionOnThePeers(	apiReport.getOpinionOnThePeers())
+					.problem(			apiReport.getProblem())
+					.solution(			apiReport.getSolution())
+					.story(				apiReport.getStory())
+					.build();
 
 		reportDAO.save(report);
 	}
@@ -109,7 +112,6 @@ public class ReportApi {
 
 	private ApiReport convert(Report report) {
 		return ApiReport.builder()
-				.id(				report.getId())
 				.department(		report.getDepartment())
 				.numberOfChildren(	report.getNumberOfChildren())
 				.numberOfParents(	report.getNumberOfParents())

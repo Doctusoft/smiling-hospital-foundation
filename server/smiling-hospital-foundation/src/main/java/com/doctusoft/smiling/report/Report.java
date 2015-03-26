@@ -1,6 +1,7 @@
 package com.doctusoft.smiling.report;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.Builder;
 import lombok.Data;
@@ -31,27 +32,27 @@ public class Report extends BaseEntity {
 	private String id;	
 	
 	private String department;
-    private String numberOfChildren;
-	private String numberOfParents;
-	private String contentOfOcupation;
-	private String customShortage;
-	private String opinionOnThePeers;
-	private String problem;
-	private String solution;
-	private String story;
+    private Integer numberOfChildren;
+	private Integer numberOfParents;
+	private Set<String> contentOfOcupation;
+	private Set<String> customShortage;
+	private Set<String> opinionOnThePeers;
+	private Set<String> problem;
+	private Set<String> solution;
+	private Set<String> story;
 	private List<Equipment> missingEquipments;
 	 
 
 	@Builder
 	public Report(String department,
-			String numberOfChildren,
-			String numberOfParents,
-			String contentOfOcupation,
-			String customShortage,
-			String opinionOnThePeers,
-			String problem,
-			String solution,
-			String story,
+			Integer numberOfChildren,
+			Integer numberOfParents,
+			Set<String> contentOfOcupation,
+			Set<String> customShortage,
+			Set<String> opinionOnThePeers,
+			Set<String> problem,
+			Set<String> solution,
+			Set<String> story,
 			List<Equipment> missingEquipments) {
 		super();
 		this.id = MoreObjects.firstNonNull(id, IdGenerator.createId());
