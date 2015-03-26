@@ -9,7 +9,7 @@ public interface BaseDAO<T extends BaseEntity> {
 
 	Result<Key<T>> save(T entity);
 	
-	void delete(T entity);
+	Result<Void> delete(T entity);
 
 	T get(String id);
 

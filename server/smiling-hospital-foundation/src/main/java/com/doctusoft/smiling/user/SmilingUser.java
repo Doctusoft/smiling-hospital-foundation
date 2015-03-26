@@ -40,7 +40,7 @@ public class SmilingUser extends BaseEntity {
 
 	private String name;
 	private String placeOfBirth;
-	private String dateOfBirth;
+	private Long dateOfBirth;
 	private String residence;
 	@Index
 	private Set<String> cities = Sets.newHashSet();

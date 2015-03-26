@@ -19,7 +19,7 @@ public class RegistrationData implements Serializable {
 
 	private String name;
 	private String placeOfBirth;
-	private Date dateOfBirth;
+	private Long dateOfBirth;
 	private String residence;
 	private Set<String> cities = Sets.newHashSet();
 	private String phoneNumber;

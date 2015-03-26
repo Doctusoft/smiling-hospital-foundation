@@ -23,8 +23,8 @@ public abstract class BaseDAOImpl<T extends BaseEntity> implements BaseDAO<T> {
 	}
 	
 	@Override
-	public void delete(T entity) {
-		ofy().delete().entity(entity);
+	public Result<Void> delete(T entity) {
+		return ofy().delete().entity(entity);
 	}
 
 	@Override

@@ -100,7 +100,9 @@ public class EquipmentApi {
 	}
 
 	private ApiEquipment convert(Equipment equipment) {
-		return ApiEquipment.builder().name(equipment.getName()).build();
+		return ApiEquipment.builder()
+				.name(equipment.getName())
+				.build();
 	}
 
 }
