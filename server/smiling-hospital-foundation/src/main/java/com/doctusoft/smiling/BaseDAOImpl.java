@@ -4,7 +4,9 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.util.List;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Result;
 
 public abstract class BaseDAOImpl<T extends BaseEntity> implements BaseDAO<T> {
 
@@ -16,8 +18,8 @@ public abstract class BaseDAOImpl<T extends BaseEntity> implements BaseDAO<T> {
 	}
 
 	@Override
-	public void save(T entity) {
-		ofy().save().entity(entity);
+	public Result<Key<T>> save(T entity) {
+		return ofy().save().entity(entity);
 	}
 	
 	@Override
