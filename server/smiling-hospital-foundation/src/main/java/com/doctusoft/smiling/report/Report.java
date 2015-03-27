@@ -29,6 +29,7 @@ public class Report extends BaseEntity {
 	@Id
 	private String id;	
 	
+	private String email;	
 	private String department;
     private Integer numberOfChildren;
 	private Integer numberOfParents;
@@ -56,6 +57,7 @@ public class Report extends BaseEntity {
 			List<Equipment> missingEquipments) {
 		super();
 		this.id = email.concat(visitationId);
+		this.email = email;
 		this.department = department;
 		this.numberOfChildren = numberOfChildren;
 		this.numberOfParents = numberOfParents;

@@ -1,12 +1,15 @@
 package com.doctusoft.smiling.report;
 
 import java.util.List;
+
 import com.doctusoft.smiling.Constants;
 import com.doctusoft.smiling.report.ApiReport;
 import com.doctusoft.smiling.report.Report;
 import com.doctusoft.smiling.report.ReportDAO;
+import com.doctusoft.smiling.security.AuthenticationService;
 import com.doctusoft.smiling.security.PermissionLevel;
 import com.doctusoft.smiling.security.Restricted;
+import com.doctusoft.smiling.user.SmilingUser;
 import com.google.api.server.spi.ServiceException;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
@@ -15,6 +18,8 @@ import com.google.api.server.spi.config.AuthLevel;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
+import com.google.appengine.repackaged.com.google.common.base.Predicate;
+import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
@@ -30,13 +35,15 @@ import com.google.inject.Inject;
 public class ReportApi {
 
 	private final ReportDAO reportDAO;
+	private final AuthenticationService authenticationService;
 
 	@Inject
-	public ReportApi(ReportDAO reportDAO) {
+	public ReportApi(ReportDAO reportDAO, AuthenticationService authenticationService) {
 		this.reportDAO = reportDAO;
+		this.authenticationService = authenticationService;
 	}
 
-	@Restricted(PermissionLevel.COORDINATOR)
+	@Restricted(PermissionLevel.VOLUNTEER)
 	@ApiMethod(httpMethod = HttpMethod.POST, path = "/report")
 	public void createReport(
 			ApiReport apiReport,
@@ -47,7 +54,7 @@ public class ReportApi {
 		apiReport.validateAndNormalize();
 
 		Report report = Report.builder()
-					.email(				apiReport.getEmail())
+					.email(				authenticationService.getUserContext().getEmail())
 					.visitationId(		apiReport.getVisitationId())
 					.department(		apiReport.getDepartment())
 					.numberOfChildren(	apiReport.getNumberOfChildren())
@@ -66,24 +73,26 @@ public class ReportApi {
 	@Restricted(PermissionLevel.VOLUNTEER)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/report/{reportName}")
 	public ApiReport getReport(
-			@Named("reportName") String reportName,
+			@Named("email") String email,
+			@Named("visitationId") String visitationId,
 			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Report report = reportDAO.get(reportName);
+		Report report = reportDAO.get(email.concat(visitationId));
 		return convert(report);
 	}
 
 	@Restricted(PermissionLevel.COORDINATOR)
 	@ApiMethod(httpMethod = HttpMethod.GET, path = "/report/delete/{reportName}")
 	public void deleteReport(
-			@Named("reportName") String reportName,
+			@Named("email") String email,
+			@Named("visitationId") String visitationId,
 			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Report report = reportDAO.get(reportName);
+		Report report = reportDAO.get(email.concat(visitationId));
 		reportDAO.delete(report);
 	}
 
@@ -93,8 +102,19 @@ public class ReportApi {
 			User user,
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
-
+       
 		List<Report> reports = reportDAO.getAll();
+		
+		if (!authenticationService.getUserContext().getPermission().hasAccess(PermissionLevel.COORDINATOR)){
+			reports = Lists.newArrayList(Iterables.filter(reports, new Predicate<Report>() {
+
+			    @Override
+			    public boolean apply(Report report) {
+			        return authenticationService.getUserContext().getEmail().equals(report.getEmail());
+			    }
+			}));
+		}
+
 		return convertList(reports);
 	}
 
