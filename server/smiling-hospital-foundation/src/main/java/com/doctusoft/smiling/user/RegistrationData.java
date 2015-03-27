@@ -1,25 +1,23 @@
 package com.doctusoft.smiling.user;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
 
-import com.google.appengine.repackaged.com.google.common.base.Strings;
+import com.doctusoft.smiling.BaseInputData;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 @Data
-public class RegistrationData implements Serializable {
+public class RegistrationData extends BaseInputData implements Serializable {
 
 	private String email;
 	private String password;
 
 	private String name;
 	private String placeOfBirth;
-	private Date dateOfBirth;
+	private Long dateOfBirth;
 	private String residence;
 	private Set<String> cities = Sets.newHashSet();
 	private String phoneNumber;
@@ -55,23 +53,5 @@ public class RegistrationData implements Serializable {
 		visitationDays = checkString(visitationDays, "visitationDays");
 		comment = checkString(comment, "comment");
 	}
-
-	private Set<String> checkCollection(Collection<String> collection, String name) {
-		Set<String> normalizedSet = Sets.newHashSet();
-		for (String string : collection) {
-			String normalizedString = Strings.nullToEmpty(string).trim();
-			if (!Strings.isNullOrEmpty(normalizedString)) {
-				normalizedSet.add(normalizedString);
-			}
-		}
-
-		Preconditions.checkArgument(!normalizedSet.isEmpty(), "you need to gave at least one " + name);
-		return normalizedSet;
-	}
-
-	private String checkString(String toCheck, String name) {
-		toCheck = Strings.nullToEmpty(toCheck).trim();
-		Preconditions.checkArgument(!Strings.isNullOrEmpty(toCheck), "the " + name + " can't be blank");
-		return toCheck;
-	}
+	
 }

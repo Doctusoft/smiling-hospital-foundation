@@ -1,7 +1,5 @@
 package com.doctusoft.smiling.report;
 
-import java.util.List;
-
 import com.doctusoft.smiling.BaseDAO;
 import com.google.inject.ImplementedBy;
 
