@@ -42,7 +42,9 @@ public class Report extends BaseEntity {
 	 
 
 	@Builder
-	public Report(String department,
+	public Report(String email,
+			String visitationId,
+			String department,
 			Integer numberOfChildren,
 			Integer numberOfParents,
 			Set<String> contentOfOcupation,
@@ -53,7 +55,7 @@ public class Report extends BaseEntity {
 			Set<String> story,
 			List<Equipment> missingEquipments) {
 		super();
-		this.id = MoreObjects.firstNonNull(id, IdGenerator.createId());
+		this.id = email.concat(visitationId);
 		this.department = department;
 		this.numberOfChildren = numberOfChildren;
 		this.numberOfParents = numberOfParents;

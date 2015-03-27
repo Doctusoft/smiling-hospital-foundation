@@ -47,6 +47,8 @@ public class ReportApi {
 		apiReport.validateAndNormalize();
 
 		Report report = Report.builder()
+					.email(				apiReport.getEmail())
+					.visitationId(		apiReport.getVisitationId())
 					.department(		apiReport.getDepartment())
 					.numberOfChildren(	apiReport.getNumberOfChildren())
 					.numberOfParents(	apiReport.getNumberOfParents())

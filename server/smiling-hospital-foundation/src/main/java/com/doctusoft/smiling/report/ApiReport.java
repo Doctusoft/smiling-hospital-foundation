@@ -17,7 +17,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class ApiReport extends BaseInputData implements Serializable {
-
+	
+	private String email;
+	private String visitationId;
 	private String department;
     private Integer numberOfChildren;
 	private Integer numberOfParents;
