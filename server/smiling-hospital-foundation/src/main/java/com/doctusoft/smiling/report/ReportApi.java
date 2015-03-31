@@ -9,7 +9,6 @@ import com.doctusoft.smiling.report.ReportDAO;
 import com.doctusoft.smiling.security.AuthenticationService;
 import com.doctusoft.smiling.security.PermissionLevel;
 import com.doctusoft.smiling.security.Restricted;
-import com.doctusoft.smiling.user.SmilingUser;
 import com.google.api.server.spi.ServiceException;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
@@ -18,9 +17,9 @@ import com.google.api.server.spi.config.AuthLevel;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
-import com.google.appengine.repackaged.com.google.common.base.Predicate;
-import com.google.appengine.repackaged.com.google.common.collect.Iterables;
-import com.google.appengine.repackaged.com.google.common.collect.Lists;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 @Api(
@@ -59,12 +58,13 @@ public class ReportApi {
 					.department(		apiReport.getDepartment())
 					.numberOfChildren(	apiReport.getNumberOfChildren())
 					.numberOfParents(	apiReport.getNumberOfParents())
-					.contentOfOcupation(apiReport.getContentOfOcupation())
+					.contentOfOccupation(apiReport.getContentOfOccupation())
 					.customShortage(	apiReport.getCustomShortage())
 					.opinionOnThePeers(	apiReport.getOpinionOnThePeers())
 					.problem(			apiReport.getProblem())
 					.solution(			apiReport.getSolution())
 					.story(				apiReport.getStory())
+					.missingEquipments(	apiReport.getMissingEquipments())
 					.build();
 
 		reportDAO.save(report);
@@ -79,7 +79,7 @@ public class ReportApi {
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Report report = reportDAO.get(email.concat(visitationId));
+		Report report = reportDAO.get(Report.generateId(email, visitationId));
 		return convert(report);
 	}
 
@@ -92,7 +92,7 @@ public class ReportApi {
 			@Nullable @Named("sessionId") String sessionId)
 			throws ServiceException {
 
-		Report report = reportDAO.get(email.concat(visitationId));
+		Report report = reportDAO.get(Report.generateId(email, visitationId));
 		reportDAO.delete(report);
 	}
 
@@ -131,12 +131,13 @@ public class ReportApi {
 				.department(		report.getDepartment())
 				.numberOfChildren(	report.getNumberOfChildren())
 				.numberOfParents(	report.getNumberOfParents())
-				.contentOfOcupation(report.getContentOfOcupation())
+				.contentOfOccupation(report.getContentOfOccupation())
 				.customShortage(	report.getCustomShortage())
 				.opinionOnThePeers(	report.getOpinionOnThePeers())
 				.problem(			report.getProblem())
 				.solution(			report.getSolution())
 				.story(				report.getStory())
+				.missingEquipments(	report.getMissingEquipments())
 				.build();
 	}
 

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import com.doctusoft.smiling.BaseEntity;
 import com.doctusoft.smiling.IdGenerator;
-import com.google.appengine.repackaged.com.google.common.base.MoreObjects;
+import com.google.common.base.MoreObjects;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;

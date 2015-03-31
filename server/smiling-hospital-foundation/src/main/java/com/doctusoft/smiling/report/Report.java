@@ -2,6 +2,10 @@ package com.doctusoft.smiling.report;
 
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
+
+import com.doctusoft.smiling.Constants;
+import com.doctusoft.smiling.InputDataPreconditions;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import com.doctusoft.smiling.BaseEntity;
-import com.doctusoft.smiling.IdGenerator;
 import com.doctusoft.smiling.equipment.Equipment;
-import com.google.appengine.repackaged.com.google.common.base.MoreObjects;
+import com.google.appengine.api.search.checkers.Preconditions;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -31,9 +34,9 @@ public class Report extends BaseEntity {
 	
 	private String email;	
 	private String department;
-    private Integer numberOfChildren;
-	private Integer numberOfParents;
-	private Set<String> contentOfOcupation;
+    private int numberOfChildren;
+	private int numberOfParents;
+	private Set<String> contentOfOccupation;
 	private Set<String> customShortage;
 	private Set<String> opinionOnThePeers;
 	private Set<String> problem;
@@ -46,9 +49,9 @@ public class Report extends BaseEntity {
 	public Report(String email,
 			String visitationId,
 			String department,
-			Integer numberOfChildren,
-			Integer numberOfParents,
-			Set<String> contentOfOcupation,
+			int numberOfChildren,
+			int numberOfParents,
+			Set<String> contentOfOccupation,
 			Set<String> customShortage,
 			Set<String> opinionOnThePeers,
 			Set<String> problem,
@@ -56,18 +59,26 @@ public class Report extends BaseEntity {
 			Set<String> story,
 			List<Equipment> missingEquipments) {
 		super();
-		this.id = email.concat(visitationId);
+		this.id = generateId(email, visitationId);
 		this.email = email;
 		this.department = department;
 		this.numberOfChildren = numberOfChildren;
 		this.numberOfParents = numberOfParents;
-		this.contentOfOcupation = contentOfOcupation;
+		this.contentOfOccupation = contentOfOccupation;
 		this.customShortage = customShortage;
 		this.opinionOnThePeers = opinionOnThePeers;
 		this.problem = problem;
 		this.solution = solution;
 		this.story = story;
+		this.missingEquipments =missingEquipments;
 	}
-
+	
+	public static String generateId(String email, String visitationId) {
+		email = InputDataPreconditions.checkNotEmptyString(email, "e-mail is empty");
+		visitationId = InputDataPreconditions.checkNotEmptyString(visitationId, "visitationId is empty");
+		Preconditions.checkArgument(Pattern.compile(Constants.RFC_EMAIL).matcher(email).matches(), "email is not valid");
+		return email.concat(visitationId);
+	}
+	
 
 }

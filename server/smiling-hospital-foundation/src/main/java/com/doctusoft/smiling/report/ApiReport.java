@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-import com.doctusoft.smiling.BaseInputData;
+import com.doctusoft.smiling.InputDataPreconditions;
 import com.doctusoft.smiling.equipment.Equipment;
 import com.google.common.base.Preconditions;
 import lombok.AllArgsConstructor;
@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class ApiReport extends BaseInputData implements Serializable {
+public class ApiReport implements Serializable {
 	
 	private String visitationId;
 	private String department;
     private Integer numberOfChildren;
 	private Integer numberOfParents;
-	private Set<String> contentOfOcupation;
+	private Set<String> contentOfOccupation;
 	private Set<String> customShortage;
 	private Set<String> opinionOnThePeers;
 	private Set<String> problem;
@@ -32,12 +32,10 @@ public class ApiReport extends BaseInputData implements Serializable {
 	
 	
 	public void validateAndNormalize() {
-		// TODO Auto-generated method stub
-		Preconditions.checkArgument(numberOfChildren != null, "the number of children is mandatory");
-		Preconditions.checkArgument(numberOfParents != null, "the number of parents is mandatory");
-		contentOfOcupation = checkCollection(contentOfOcupation, "contentOfOcupation");
-		opinionOnThePeers = checkCollection(opinionOnThePeers, "opinionOnThePeers");
-		problem = checkCollection(problem, "problem");
+		Preconditions.checkNotNull(numberOfChildren, "the number of children is mandatory");
+		contentOfOccupation = 	InputDataPreconditions.checkNotEmptyCollection(contentOfOccupation, "contentOfOccupation");
+		opinionOnThePeers = 	InputDataPreconditions.checkNotEmptyCollection(opinionOnThePeers, "opinionOnThePeers");
+		problem = 				InputDataPreconditions.checkNotEmptyCollection(problem, "problem");
 	}
 	
 }

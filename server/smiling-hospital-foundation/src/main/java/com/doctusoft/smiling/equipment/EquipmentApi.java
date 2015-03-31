@@ -1,6 +1,7 @@
 package com.doctusoft.smiling.equipment;
 
 import java.util.List;
+
 import com.doctusoft.smiling.Constants;
 import com.doctusoft.smiling.equipment.ApiEquipment;
 import com.doctusoft.smiling.equipment.Equipment;
@@ -15,7 +16,7 @@ import com.google.api.server.spi.config.AuthLevel;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
-import com.google.appengine.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 @Api(
