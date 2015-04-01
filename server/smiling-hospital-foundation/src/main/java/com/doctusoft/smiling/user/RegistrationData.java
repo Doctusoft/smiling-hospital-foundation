@@ -1,13 +1,11 @@
 package com.doctusoft.smiling.user;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 
 import lombok.Data;
 
-import com.google.appengine.repackaged.com.google.common.base.Strings;
+import com.doctusoft.smiling.InputDataPreconditions;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
@@ -36,42 +34,24 @@ public class RegistrationData implements Serializable {
 	private String photoUrl;
 
 	public void validateAndNormalize() {
-		email = checkString(email, "email");
-		password = checkString(password, "password");
-		name = checkString(name, "name");
-		placeOfBirth = checkString(placeOfBirth, "placeOfBirth");
-		Preconditions.checkArgument(dateOfBirth != null, "the date of birth is mandatory");
-		residence = checkString(residence, "residence");
-		cities = checkCollection(cities, "city");
-		phoneNumber = checkString(phoneNumber, "phoneNumber");
-		occupation = checkString(occupation, "occupation");
-		skills = checkCollection(skills, "skill");
-		experienceWithArt = checkString(experienceWithArt, "experienceWithArt");
-		experienceWithChildren = checkString(experienceWithChildren, "experienceWithChildren");
-		experienceWithSickChildren = checkString(experienceWithSickChildren, "experienceWithSickChildren");
-		experienceWithHospitals = checkString(experienceWithHospitals, "experienceWithHospitals");
-		reasonsOfApplication = checkCollection(reasonsOfApplication, "reason");
-		Preconditions.checkArgument(visitationFrequency != null, "the visitationFrequency can't be blank");
-		visitationDays = checkString(visitationDays, "visitationDays");
-		comment = checkString(comment, "comment");
+		email = 						InputDataPreconditions.checkNotEmptyString(email, "email");
+		password = 						InputDataPreconditions.checkNotEmptyString(password, "password");
+		name = 							InputDataPreconditions.checkNotEmptyString(name, "name");
+		placeOfBirth = 					InputDataPreconditions.checkNotEmptyString(placeOfBirth, "placeOfBirth");
+		Preconditions.checkNotNull(dateOfBirth, "the date of birth is mandatory");
+		residence = 					InputDataPreconditions.checkNotEmptyString(residence, "residence");
+		cities = 						InputDataPreconditions.checkNotEmptyCollection(cities, "city");
+		phoneNumber = 					InputDataPreconditions.checkNotEmptyString(phoneNumber, "phoneNumber");
+		occupation = 					InputDataPreconditions.checkNotEmptyString(occupation, "occupation");
+		skills = 						InputDataPreconditions.checkNotEmptyCollection(skills, "skill");
+		experienceWithArt = 			InputDataPreconditions.checkNotEmptyString(experienceWithArt, "experienceWithArt");
+		experienceWithChildren = 		InputDataPreconditions.checkNotEmptyString(experienceWithChildren, "experienceWithChildren");
+		experienceWithSickChildren = 	InputDataPreconditions.checkNotEmptyString(experienceWithSickChildren, "experienceWithSickChildren");
+		experienceWithHospitals = 		InputDataPreconditions.checkNotEmptyString(experienceWithHospitals, "experienceWithHospitals");
+		reasonsOfApplication = 			InputDataPreconditions.checkNotEmptyCollection(reasonsOfApplication, "reason");
+		Preconditions.checkNotNull(visitationFrequency, "the visitationFrequency can't be blank");
+		visitationDays = 				InputDataPreconditions.checkNotEmptyString(visitationDays, "visitationDays");
+		comment = 						InputDataPreconditions.checkNotEmptyString(comment, "comment");
 	}
-
-	private Set<String> checkCollection(Collection<String> collection, String name) {
-		Set<String> normalizedSet = Sets.newHashSet();
-		for (String string : collection) {
-			String normalizedString = Strings.nullToEmpty(string).trim();
-			if (!Strings.isNullOrEmpty(normalizedString)) {
-				normalizedSet.add(normalizedString);
-			}
-		}
-
-		Preconditions.checkArgument(!normalizedSet.isEmpty(), "you need to gave at least one " + name);
-		return normalizedSet;
-	}
-
-	private String checkString(String toCheck, String name) {
-		toCheck = Strings.nullToEmpty(toCheck).trim();
-		Preconditions.checkArgument(!Strings.isNullOrEmpty(toCheck), "the " + name + " can't be blank");
-		return toCheck;
-	}
+	
 }
