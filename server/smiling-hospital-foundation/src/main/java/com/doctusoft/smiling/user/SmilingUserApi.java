@@ -1,5 +1,9 @@
 package com.doctusoft.smiling.user;
 
+import java.util.Set;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.doctusoft.smiling.Constants;
 import com.doctusoft.smiling.security.PermissionLevel;
 import com.doctusoft.smiling.security.Restricted;
@@ -10,7 +14,10 @@ import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.AuthLevel;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Api(
 		name = "user",
@@ -40,12 +47,52 @@ public class SmilingUserApi {
 
 		registrationData.validateAndNormalize();
 
-		// TODO fill the other fields
+		// TODO passwordHash
 		smilingUserDAO.save(SmilingUser.builder()
+				.permissionLevel(PermissionLevel.VOLUNTEER)
+				.passwordHash(BCrypt.hashpw(registrationData.getPassword(), BCrypt.gensalt(12)))
+				.email						(registrationData.getEmail())
+				.name						(registrationData.getName())
+				.cities						(registrationData.getCities())
+				.placeOfBirth				(registrationData.getPlaceOfBirth())
+				.dateOfBirth				(registrationData.getDateOfBirth())
+				.residence					(registrationData.getResidence ())
+				.phoneNumber				(registrationData.getPhoneNumber())
+				.occupation					(registrationData.getOccupation())
+				.skills						(registrationData.getSkills())
+				.experienceWithArt			(registrationData.getExperienceWithArt())
+				.experienceWithChildren		(registrationData.getExperienceWithChildren())
+				.experienceWithSickChildren	(registrationData.getExperienceWithSickChildren())
+				.experienceWithHospitals	(registrationData.getExperienceWithHospitals())
+				.reasonsOfApplication		(registrationData.getReasonsOfApplication())
+				.visitationFrequency		(registrationData.getVisitationFrequency())
+				.visitationDays				(registrationData.getVisitationDays())
+				.comment					(registrationData.getComment())
+				.photoUrl					(registrationData.getPhotoUrl())
+				/**
+				*
+				* this is less readable for me
+				*		
 				.permissionLevel(PermissionLevel.VOLUNTEER)
 				.email(registrationData.getEmail())
 				.name(registrationData.getName())
 				.cities(registrationData.getCities())
+				.placeOfBirth(registrationData.getPlaceOfBirth())
+				.dateOfBirth(registrationData.getDateOfBirth())
+				.residence(registrationData.getResidence ())
+				.phoneNumber(registrationData.getPhoneNumber())
+				.occupation(registrationData.getOccupation())
+				.skills(registrationData.getSkills())
+				.experienceWithArt(registrationData.getExperienceWithArt())
+				.experienceWithChildren(registrationData.getExperienceWithChildren())
+				.experienceWithSickChildren(registrationData.getExperienceWithSickChildren())
+				.experienceWithHospitals(registrationData.getExperienceWithHospitals())
+				.reasonsOfApplication(registrationData.getReasonsOfApplication())
+				.visitationFrequency(registrationData.getVisitationFrequency())
+				.visitationDays(registrationData.getVisitationDays())
+				.comment(registrationData.getComment())
+				.photoUrl(registrationData.getPhotoUrl())
+				*/
 				.build());
 	}
 

@@ -2,9 +2,14 @@ package com.doctusoft.smiling;
 
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Result;
+
 public interface BaseDAO<T extends BaseEntity> {
 
-	void save(T entity);
+	Result<Key<T>> save(T entity);
+	
+	Result<Void> delete(T entity);
 
 	T get(String id);
 
