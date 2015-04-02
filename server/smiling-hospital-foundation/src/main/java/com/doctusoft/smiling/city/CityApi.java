@@ -54,7 +54,7 @@ public class CityApi {
 			throws ServiceException {
 		
 		City city = cityDAO.get(cityName);
-		cityDAO.(city);
+		cityDAO.delete(city);
 	}
 
 }
