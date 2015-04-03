@@ -1,4 +1,4 @@
-package ds.smiling.visitation;
+package com.doctusoft.smiling.visitation;
 
 import org.joda.time.DateTime;
 

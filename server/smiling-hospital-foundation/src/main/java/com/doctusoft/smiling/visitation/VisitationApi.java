@@ -1,4 +1,4 @@
-package ds.smiling.visitation;
+package com.doctusoft.smiling.visitation;
 
 import com.doctusoft.smiling.Constants;
 import com.doctusoft.smiling.security.PermissionLevel;
@@ -7,11 +7,11 @@ import com.google.api.server.spi.ServiceException;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.AuthLevel;
+import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.config.Nullable;
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 @Api(
         name = "visitation",

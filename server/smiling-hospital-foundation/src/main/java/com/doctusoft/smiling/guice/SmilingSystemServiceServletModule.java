@@ -6,12 +6,11 @@ import java.util.Set;
 import com.doctusoft.smiling.hospital.HospitalApi;
 import com.doctusoft.smiling.security.RequestFilter;
 import com.doctusoft.smiling.user.SmilingUserApi;
+import com.doctusoft.smiling.visitation.VisitationApi;
 import com.doctusoft.smiling.equipment.EquipmentApi;
 import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.ObjectifyFilter;
-
-import ds.smiling.visitation.VisitationApi;
 
 public class SmilingSystemServiceServletModule extends GuiceSystemServiceServletModule {
 
