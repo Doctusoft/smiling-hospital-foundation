@@ -6,6 +6,7 @@ import java.util.Set;
 import com.doctusoft.smiling.hospital.HospitalApi;
 import com.doctusoft.smiling.security.RequestFilter;
 import com.doctusoft.smiling.user.SmilingUserApi;
+import com.doctusoft.smiling.city.CityApi;
 import com.doctusoft.smiling.equipment.EquipmentApi;
 import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
 import com.google.inject.Singleton;
@@ -25,6 +26,7 @@ public class SmilingSystemServiceServletModule extends GuiceSystemServiceServlet
 		serviceClasses.add(HospitalApi.class);
 		serviceClasses.add(SmilingUserApi.class);
 		serviceClasses.add(EquipmentApi.class);
+		serviceClasses.add(CityApi.class);
 		this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
 	}
 }
