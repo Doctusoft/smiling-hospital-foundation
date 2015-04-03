@@ -14,11 +14,11 @@ import com.googlecode.objectify.annotation.Id;
 @Data
 @Cache
 @Entity
-@EqualsAndHashCode(callSuper=true, of={"id"})
+@EqualsAndHashCode(callSuper=true, of={"smileId"})
 public class Smile extends BaseEntity {
 	
 	@Id
-	private String id;
+	private String smileId;
 	private String from;
 	private String to;
 	private String date;

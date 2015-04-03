@@ -65,7 +65,7 @@ public class SmileApi {
 	public void deleteSmile(
 	        @Named("smileId") String smileId,
 	        User user,
-	        @Nullable @com.google.inject.name.Named("sessionId") String sessionId)
+	        @Nullable @Named("sessionId") String sessionId)
 	        throws ServiceException {
 	    
 	    Smile smile = smileDAO.get(smileId);

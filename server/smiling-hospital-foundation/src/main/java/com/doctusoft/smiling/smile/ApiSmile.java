@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ApiSmile implements Serializable {
 
-	private String id;
+	private String smileId;
 	private String from;
 	private String to;
 	private String date;
