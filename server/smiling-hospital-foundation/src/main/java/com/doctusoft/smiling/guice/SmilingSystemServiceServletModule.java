@@ -11,6 +11,8 @@ import com.google.api.server.spi.guice.GuiceSystemServiceServletModule;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.ObjectifyFilter;
 
+import ds.smiling.visitation.VisitationApi;
+
 public class SmilingSystemServiceServletModule extends GuiceSystemServiceServletModule {
 
 	@Override
@@ -25,6 +27,7 @@ public class SmilingSystemServiceServletModule extends GuiceSystemServiceServlet
 		serviceClasses.add(HospitalApi.class);
 		serviceClasses.add(SmilingUserApi.class);
 		serviceClasses.add(EquipmentApi.class);
+		serviceClasses.add(VisitationApi.class);
 		this.serveGuiceSystemServiceServlet("/_ah/spi/*", serviceClasses);
 	}
 }
