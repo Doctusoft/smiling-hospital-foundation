@@ -43,6 +43,8 @@ public class VisitationApi {
                 .minVolunteers(apiVisitation.getMinVolunteers())
                 .maxVolunteers(apiVisitation.getMaxVolunteers())
                 .time(apiVisitation.getTime())
+                .duration(apiVisitation.getDuration())
+                .hospitalId(apiVisitation.getHospitalId())
                 .build();
         
         visitationDAO.save(visitation);
@@ -77,6 +79,8 @@ public class VisitationApi {
                 .minVolunteers(visitation.getMinVolunteers())
                 .maxVolunteers(visitation.getMaxVolunteers())
                 .time(visitation.getTime())
+                .duration(visitation.getDuration())
+                .hospitalId(visitation.getHospitalId())
                 .build();
     }
 }

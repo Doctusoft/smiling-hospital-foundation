@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import com.doctusoft.smiling.BaseEntity;
+import com.doctusoft.smiling.hospital.Hospital;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -24,12 +25,16 @@ public class Visitation extends BaseEntity {
     private long minVolunteers;
     private long maxVolunteers;
     private DateTime time;
+    private String duration;
+    private String hospitalId;
     
     @Builder
-    public Visitation(long minVolunteers, long maxVolunteers, DateTime time) {
+    public Visitation(long minVolunteers, long maxVolunteers, DateTime time, String duration, String hospitalId) {
         super();
         this.minVolunteers = minVolunteers;
         this.maxVolunteers = maxVolunteers;
         this.time = time;
+        this.duration = duration;
+        this.hospitalId = hospitalId;
     }
 }
