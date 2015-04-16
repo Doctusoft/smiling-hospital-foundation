@@ -48,6 +48,8 @@ public class HospitalApi {
 
 		Hospital hospital = Hospital.builder()
 				.name(apiHospital.getName())
+				.city(apiHospital.getCity())
+				.visitingTimes(apiHospital.getVisitingTimes())
 				.build();
 
 		hospitalDAO.save(hospital);
@@ -101,6 +103,8 @@ public class HospitalApi {
 		return ApiHospital.builder()
 				.id(hospital.getId())
 				.name(hospital.getName())
+				.city(hospital.getCity())
+				.visitingTimes(hospital.getVisitingTimes())
 				.build();
 	}
 }

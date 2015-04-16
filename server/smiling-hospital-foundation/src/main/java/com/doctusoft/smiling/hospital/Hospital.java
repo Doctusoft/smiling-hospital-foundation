@@ -1,5 +1,7 @@
 package com.doctusoft.smiling.hospital;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +22,18 @@ import com.googlecode.objectify.annotation.Unindex;
 @Entity
 @EqualsAndHashCode(of={"id"})
 public class Hospital extends BaseEntity {
+    
+        @Entity
+        @Data
+        @Index
+        public class VisitingTime {
+            @Id
+            private String id;
+            private long minVolunteers;
+            private long maxVolunteers;
+            private long dayOfWeek;
+            private String duration;
+        }
 
 	public static interface IndexedProperties extends BaseEntity.IndexedProperties {
 		String CITY = "city";
@@ -31,14 +45,16 @@ public class Hospital extends BaseEntity {
 	private String name;
 	@Index
 	private String city;
+	private List<VisitingTime> visitingTimes;
 
 
 	@Builder
-	public Hospital(String id, String name, String city) {
+	public Hospital(String id, String name, String city, List<VisitingTime> visitingTimes) {
 		super();
 		this.id = MoreObjects.firstNonNull(id, IdGenerator.createId());
 		this.name = name;
 		this.city = city;
+		this.visitingTimes = visitingTimes;
 	}
 
 
