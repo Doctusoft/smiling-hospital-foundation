@@ -6,6 +6,12 @@ var mkdirp = require('mkdirp');
 
 var $ = require('gulp-load-plugins')();
 
+var tsProject = ts.createProject({
+  declarationFiles: true,
+  target: 'ES6',
+  sortOutput: true
+});
+
 module.exports = function(options) {
   gulp.task('scripts', ['tsd:install'], function () {
     mkdirp.sync(options.tmp);
@@ -14,7 +20,9 @@ module.exports = function(options) {
       .pipe($.sourcemaps.init())
       .pipe($.tslint())
       .pipe($.tslint.report('prose', { emitError: false }))
-      .pipe($.typescript({sortOutput: true})).on('error', options.errorHandler('TypeScript'))
+      .pipe($.typescript(tsProject)
+	  .pipe(concat('/app/smilingHospitalUi.js'))
+	  .on('error', options.errorHandler('TypeScript'))
       .pipe($.sourcemaps.write())
       .pipe($.toJson({filename: options.tmp + '/sortOutput.json', relative:true}))
       .pipe(gulp.dest(options.tmp + '/serve/'))
