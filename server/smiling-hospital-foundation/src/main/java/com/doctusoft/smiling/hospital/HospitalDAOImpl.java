@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.doctusoft.smiling.BaseDAOImpl;
-import com.google.appengine.repackaged.com.google.common.collect.Iterables;
+import com.google.common.collect.Iterables;
 
 class HospitalDAOImpl extends BaseDAOImpl<Hospital> implements HospitalDAO {
 
